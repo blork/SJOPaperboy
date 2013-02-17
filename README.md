@@ -1,2 +1,60 @@
 SJOPaperboy
 ===========
+An easy to use library that lets you implement backgound updates in your app that run 
+whenever the user enters or exits a specified location.
+
+![SJOPaperboyViewController](https://raw.github.com/blork/SJOPaperboy/master/screenshot.png)
+
+
+Dependancies
+============
+`SJOPaperboy` requires the `CoreLocation` (for determining user location) and `AddressBookUI`
+(for formatting address strings) frameworks. Make sure to add them to 'Link Binary with Libraries'
+under 'Build Phases' of your target.
+
+Setup
+=====
+
+Have your `AppDelegate` class have a `CLLocationManager` as a property.
+
+```
+@property (strong, nonatomic) CLLocationManager *paperboyLocationManager;
+```
+
+Then, in `application:didFinishLaunchingWithOptions:` add the following:
+
+```
+self.paperboyLocationManager = [SJOPaperboyLocationManager sharedLocationManager];
+[[SJOPaperboyLocationManager sharedInstance] setLocationChangedBlock:^{
+  //Perform your background updates here.
+}];
+```
+
+To allow users to add geofencing locations, display `SJOPaperboyViewController`:
+
+```
+SJOPaperboyViewController* paperboyViewController = [[SJOPaperboyViewController alloc] init];
+```
+
+You can customise elements of the view controller by editing `Paperboy.strings`.
+
+See the included example project for more implementation details.
+
+Acknowledgements
+================
+Thanks to [Marco Arment](marco.org) for [`IPInsetLabel`](https://gist.github.com/marcoarment/2596057).
+
+Inspired by the feature in [News.me](http://blog.news.me/post/24126549507/developing-stories-paperboy), 
+Digg, and [Instapaper](http://blog.instapaper.com/post/24293729146) (plus many others).
+
+License
+=======
+This project made available under the MIT License.
+
+Copyright (C) 2013 Sam Oakley
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
