@@ -1,6 +1,6 @@
 SJOPaperboy
 ===========
-An easy to use library that lets you implement backgound updates in your app that run 
+An easy to use library that lets you implement background updates in your app that run 
 whenever the user enters or exits a specified location.
 
 ![SJOPaperboyViewController](https://raw.github.com/blork/SJOPaperboy/master/screenshot.png)
@@ -14,6 +14,15 @@ under 'Build Phases' of your target.
 
 Setup
 =====
+Copy the following files to your Xcode project:
+```
+IPInsetLabel.h
+IPInsetLabel.m
+SJOPaperboyLocationManager.h
+SJOPaperboyLocationManager.m
+SJOPaperboyViewController.h
+SJOPaperboyViewController.m
+```
 
 Have your `AppDelegate` class have a `CLLocationManager` as a property.
 
