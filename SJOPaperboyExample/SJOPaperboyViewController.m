@@ -166,6 +166,7 @@
                         cell.accessoryView = loadingIndicator;
                     } else {
                         cell.textLabel.text = NSLocalizedStringFromTable(@"add_location", @"Paperboy", nil);
+                        cell.accessoryView = nil;
                     }
                     break;
                 case 1:
