@@ -51,7 +51,7 @@ See the included example project for more implementation details.
 
 Acknowledgements
 ================
-Thanks to [Marco Arment](marco.org) for [`IPInsetLabel`](https://gist.github.com/marcoarment/2596057).
+Thanks to [Marco Arment](http://marco.org) for [`IPInsetLabel`](https://gist.github.com/marcoarment/2596057).
 
 Inspired by the feature in [News.me](http://blog.news.me/post/24126549507/developing-stories-paperboy), 
 Digg, and [Instapaper](http://blog.instapaper.com/post/24293729146) (plus many others).
