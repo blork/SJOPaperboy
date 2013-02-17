@@ -27,7 +27,7 @@
     
     self.paperboyLocationManager = [SJOPaperboyLocationManager sharedLocationManager];
     [[SJOPaperboyLocationManager sharedInstance] setLocationChangedBlock:^{
-        //Perform your bakground updates here.
+        //Perform your background updates here.
         NSLog(@"Location changed block called.");
     }];
     
