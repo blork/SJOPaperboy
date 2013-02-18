@@ -191,7 +191,8 @@
             cell.textLabel.textAlignment = NSTextAlignmentLeft;
             cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
             cell.textLabel.textColor = [UIColor blackColor];
-            cell.imageView.image = [UIImage imageNamed:@"22-location-arrow"];
+            //A navigation icon looks good here. Removed because I shouldn't redistibute Glyphish icons.
+            //cell.imageView.image = [UIImage imageNamed:@"22-location-arrow"];
             break;
         }
             
