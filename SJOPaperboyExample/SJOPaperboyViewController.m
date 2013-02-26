@@ -300,6 +300,11 @@
     }];
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    [self locationManager:manager didUpdateLocations:@[newLocation]];
+}
+
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     //TODO: Show alert view
