@@ -371,6 +371,11 @@
     } else {
         self.numberOfSections = 1;
         [self.tableView deleteSections:indexes withRowAnimation:UITableViewRowAnimationAutomatic];
+        //Actually stop monitoring for all locations when turned off to get rid of the location services indicator in the status bar
+        NSArray *regionArray = [[[SJOPaperboyLocationManager sharedLocationManager] monitoredRegions] allObjects];
+        for (int i = 0; i < [regionArray count]; i++) {
+            [[SJOPaperboyLocationManager sharedLocationManager] stopMonitoringForRegion:[regionArray objectAtIndex:i]];
+        }
     }
     
     [self updateGeofencedLocations];
