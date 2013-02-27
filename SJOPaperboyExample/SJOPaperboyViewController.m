@@ -316,28 +316,32 @@
 
 -(void) updateGeofencedLocations
 {
-    NSMutableArray *geofences = [NSMutableArray array];
-    NSArray* locations = [SJOPaperboyViewController locationsForUpdate];
-    
-    for(CLLocation *location in locations) {
-        NSString* identifier = [NSString stringWithFormat:@"%f%f", location.coordinate.latitude, location.coordinate.longitude];
-        
-        CLRegion* geofence = [[CLRegion alloc] initCircularRegionWithCenter:location.coordinate
-                                                                     radius:100
-                                                                 identifier:identifier];
-        
-        [geofences addObject:geofence];
+    // Cancel previous update locations before setting new ones
+    NSArray *regionArray = [[[SJOPaperboyLocationManager sharedLocationManager] monitoredRegions] allObjects];
+    for (int i = 0; i < [regionArray count]; i++) {
+        [[SJOPaperboyLocationManager sharedLocationManager] stopMonitoringForRegion:[regionArray objectAtIndex:i]];
     }
     
-    BOOL isBackgroundUpdatingEnabled = [SJOPaperboyViewController isBackgroundUpdatingEnabled];
-    if (geofences.count > 0) {
-        for(CLRegion *geofence in geofences) {
-            if (isBackgroundUpdatingEnabled) {
+    if ([SJOPaperboyViewController isBackgroundUpdatingEnabled]) {
+        
+        NSMutableArray *geofences = [NSMutableArray array];
+        NSArray* locations = [SJOPaperboyViewController locationsForUpdate];
+        
+        for(CLLocation *location in locations) {
+            NSString* identifier = [NSString stringWithFormat:@"%f%f", location.coordinate.latitude, location.coordinate.longitude];
+            
+            CLRegion* geofence = [[CLRegion alloc] initCircularRegionWithCenter:location.coordinate
+                                                                         radius:100
+                                                                     identifier:identifier];
+            [geofences addObject:geofence];
+        }
+        
+        if (geofences.count > 0) {
+            for(CLRegion *geofence in geofences) {
                 [[SJOPaperboyLocationManager sharedLocationManager] startMonitoringForRegion:geofence];
-            } else {
-                [[SJOPaperboyLocationManager sharedLocationManager] stopMonitoringForRegion:geofence];
             }
         }
+        
     }
 }
 
@@ -371,11 +375,6 @@
     } else {
         self.numberOfSections = 1;
         [self.tableView deleteSections:indexes withRowAnimation:UITableViewRowAnimationAutomatic];
-        //Actually stop monitoring for all locations when turned off to get rid of the location services indicator in the status bar
-        NSArray *regionArray = [[[SJOPaperboyLocationManager sharedLocationManager] monitoredRegions] allObjects];
-        for (int i = 0; i < [regionArray count]; i++) {
-            [[SJOPaperboyLocationManager sharedLocationManager] stopMonitoringForRegion:[regionArray objectAtIndex:i]];
-        }
     }
     
     [self updateGeofencedLocations];
