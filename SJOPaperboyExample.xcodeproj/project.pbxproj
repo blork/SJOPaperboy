@@ -16,12 +16,12 @@
 		22261BF116D1150300AD9271 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 22261BF016D1150300AD9271 /* Default.png */; };
 		22261BF316D1150300AD9271 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22261BF216D1150300AD9271 /* Default@2x.png */; };
 		22261BF516D1150300AD9271 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22261BF416D1150300AD9271 /* Default-568h@2x.png */; };
-		22261C0216D1152300AD9271 /* Paperboy.strings in Resources */ = {isa = PBXBuildFile; fileRef = 22261BFF16D1152300AD9271 /* Paperboy.strings */; };
 		22261C0716D1156100AD9271 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22261C0616D1156100AD9271 /* CoreLocation.framework */; };
 		22261C0916D1156600AD9271 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22261C0816D1156600AD9271 /* AddressBookUI.framework */; };
 		22F855F816DE89210054DC3E /* IPInsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F855F316DE89210054DC3E /* IPInsetLabel.m */; };
 		22F855F916DE89210054DC3E /* SJOPaperboyLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F855F516DE89210054DC3E /* SJOPaperboyLocationManager.m */; };
 		22F855FA16DE89210054DC3E /* SJOPaperboyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F855F716DE89210054DC3E /* SJOPaperboyViewController.m */; };
+		22F8560816DFD21B0054DC3E /* Paperboy.strings in Resources */ = {isa = PBXBuildFile; fileRef = 22F8560716DFD21B0054DC3E /* Paperboy.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,7 +38,6 @@
 		22261BF016D1150300AD9271 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		22261BF216D1150300AD9271 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		22261BF416D1150300AD9271 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		22261BFF16D1152300AD9271 /* Paperboy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Paperboy.strings; sourceTree = "<group>"; };
 		22261C0616D1156100AD9271 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		22261C0816D1156600AD9271 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		22F855F216DE89210054DC3E /* IPInsetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPInsetLabel.h; sourceTree = "<group>"; };
@@ -47,6 +46,7 @@
 		22F855F516DE89210054DC3E /* SJOPaperboyLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJOPaperboyLocationManager.m; sourceTree = "<group>"; };
 		22F855F616DE89210054DC3E /* SJOPaperboyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJOPaperboyViewController.h; sourceTree = "<group>"; };
 		22F855F716DE89210054DC3E /* SJOPaperboyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJOPaperboyViewController.m; sourceTree = "<group>"; };
+		22F8560716DFD21B0054DC3E /* Paperboy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Paperboy.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +100,6 @@
 				22F855F116DE89210054DC3E /* SJOPaperboy */,
 				22261BED16D1150300AD9271 /* SJOAppDelegate.h */,
 				22261BEE16D1150300AD9271 /* SJOAppDelegate.m */,
-				22261BFF16D1152300AD9271 /* Paperboy.strings */,
 				22261BE516D1150300AD9271 /* Supporting Files */,
 			);
 			path = SJOPaperboyExample;
@@ -123,6 +122,7 @@
 		22F855F116DE89210054DC3E /* SJOPaperboy */ = {
 			isa = PBXGroup;
 			children = (
+				22F8560716DFD21B0054DC3E /* Paperboy.strings */,
 				22F855F216DE89210054DC3E /* IPInsetLabel.h */,
 				22F855F316DE89210054DC3E /* IPInsetLabel.m */,
 				22F855F416DE89210054DC3E /* SJOPaperboyLocationManager.h */,
@@ -189,7 +189,7 @@
 				22261BF116D1150300AD9271 /* Default.png in Resources */,
 				22261BF316D1150300AD9271 /* Default@2x.png in Resources */,
 				22261BF516D1150300AD9271 /* Default-568h@2x.png in Resources */,
-				22261C0216D1152300AD9271 /* Paperboy.strings in Resources */,
+				22F8560816DFD21B0054DC3E /* Paperboy.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
