@@ -6,14 +6,18 @@ whenever the user enters or exits a specified location.
 ![SJOPaperboyViewController](https://raw.github.com/blork/SJOPaperboy/master/screenshot.png)
 
 
-Dependancies
-============
-`SJOPaperboy` requires the `CoreLocation` (for determining user location) and `AddressBookUI`
-(for formatting address strings) frameworks. Make sure to add them to 'Link Binary with Libraries'
-under 'Build Phases' of your target.
-
 Setup
 =====
+
+If you are using [CocoaPods](http://cocoapods.org), just add the following to your Podspec:
+```
+pod 'SJOPaperboy', '~> 1.0.0'
+```
+
+Setup (without CocoaPods)
+=====
+
+
 Copy the following files to your Xcode project:
 ```
 IPInsetLabel.h
@@ -48,6 +52,13 @@ SJOPaperboyViewController* paperboyViewController = [[SJOPaperboyViewController 
 You can customise elements of the view controller by editing `Paperboy.strings`.
 
 See the included example project for more implementation details.
+
+Dependancies
+============
+`SJOPaperboy` requires the `CoreLocation` (for determining user location) and `AddressBookUI`
+(for formatting address strings) frameworks. If you aren't using CocoaPods make sure to add them to 'Link Binary with Libraries'
+under 'Build Phases' of your target.
+
 
 Acknowledgements
 ================
