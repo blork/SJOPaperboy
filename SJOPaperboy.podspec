@@ -14,6 +14,8 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '5.0'
 
   s.source_files = 'SJOPaperboy'
+  s.public_header_files = 'SJOPaperboy/SJOPaperboyLocationManager.h,SJOPaperboy/SJOPaperboyViewController.h'
+  s.resources = 'SJOPaperboy/Paperboy.strings'
   
   s.frameworks = 'CoreLocation', 'AddressBookUI'
 
