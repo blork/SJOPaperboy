@@ -17,7 +17,6 @@ pod 'SJOPaperboy', '~> 1.0.0'
 Setup (without CocoaPods)
 =====
 
-
 Copy the following files to your Xcode project:
 ```
 IPInsetLabel.h
@@ -27,6 +26,9 @@ SJOPaperboyLocationManager.m
 SJOPaperboyViewController.h
 SJOPaperboyViewController.m
 ```
+
+Usage
+=====
 
 Have your `AppDelegate` class have a `CLLocationManager` as a property.
 
