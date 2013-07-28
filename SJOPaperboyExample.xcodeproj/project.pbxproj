@@ -162,6 +162,15 @@
 				CLASSPREFIX = SJO;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Sam Oakley";
+				TargetAttributes = {
+					22261BDA16D1150300AD9271 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = 22261BD616D1150300AD9271 /* Build configuration list for PBXProject "SJOPaperboyExample" */;
 			compatibilityVersion = "Xcode 3.2";

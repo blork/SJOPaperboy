@@ -10,7 +10,8 @@
 #import "SJOPaperboyLocationManager.h"
 #import "IPInsetLabel.h"
 
-#define kBackgroundUpdates @"paperboy_background_updates"
+#define kBackgroundUpdates @"paperboy_fetch_background_updates"
+#define kLocationUpdates @"paperboy_background_updates"
 #define kLocations @"paperboy_location_array"
 
 @interface SJOPaperboyViewController ()
@@ -38,8 +39,8 @@
         self.locationManager.delegate = self;
         self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
         self.isLocating = NO;
-        
-        self.numberOfSections = [[NSUserDefaults standardUserDefaults] boolForKey:kBackgroundUpdates] ? 3 : 1;
+        self.labelFont = [UIFont systemFontOfSize:16];
+        self.numberOfSections = [SJOPaperboyViewController isLocationUpdatingEnabled] ? 3 : 1;
     }
     return self;
 }
@@ -51,8 +52,16 @@
     NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     NSString *deviceName = [UIDevice currentDevice].localizedModel;
     
-    NSString* headerText = [NSString stringWithFormat:NSLocalizedStringFromTable(@"header_text", @"Paperboy", nil), appName];
-    NSString* footerText = [NSString stringWithFormat:NSLocalizedStringFromTable(@"footer_text", @"Paperboy", nil), appName,deviceName];
+    
+    NSString* headerText;
+    if ([SJOPaperboyViewController hasBackgroundModeEnabled]) {
+        headerText = [NSString stringWithFormat:NSLocalizedStringFromTable(@"header_text_plus_fetch", @"Paperboy", nil), appName];
+    } else {
+        headerText = [NSString stringWithFormat:NSLocalizedStringFromTable(@"header_text", @"Paperboy", nil), appName];
+    }
+    
+    NSString* footerText = [NSString stringWithFormat:NSLocalizedStringFromTable(@"footer_text", @"Paperboy", nil), appName, deviceName];
+    
     self.headerLabel = [self styledLabelWithText:headerText];
     self.footerLabel = [self styledLabelWithText:footerText];
 }
@@ -73,7 +82,7 @@
     self.footerLabel.frame = CGRectMake(0, 0, self.view.bounds.size.width, 0);
     [self.footerLabel resizeHeightToFitText];
     self.tableView.tableFooterView = self.footerLabel;
-
+    
     if (![CLLocationManager regionMonitoringAvailable]) {
         [[[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"region_monitoring_not_available_title",
                                                                        @"Paperboy",
@@ -108,7 +117,7 @@
 {
     switch (section) {
         case 0:
-            return 1;
+            return [SJOPaperboyViewController hasBackgroundModeEnabled] ? 2 : 1;
         case 1:
             return 2;
         case 2:{
@@ -139,24 +148,33 @@
             
             cell.userInteractionEnabled = [CLLocationManager regionMonitoringAvailable];
             toggleSwitch.userInteractionEnabled = [CLLocationManager regionMonitoringAvailable];
-
-            toggleSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:kBackgroundUpdates];
+            
             cell.accessoryView = toggleSwitch;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.textLabel.text = NSLocalizedStringFromTable(@"background_updates", @"Paperboy", nil);
             cell.imageView.image = nil;
             cell.textLabel.textAlignment = NSTextAlignmentLeft;
-            cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
             cell.textLabel.textColor = [UIColor blackColor];
-            [toggleSwitch addTarget:self action:@selector(toggleBackgroundUpdates:) forControlEvents:UIControlEventValueChanged];
             
+            
+            switch (indexPath.row) {
+                case 0:
+                    if ([SJOPaperboyViewController hasBackgroundModeEnabled]) {
+                        toggleSwitch.on = [SJOPaperboyViewController isBackgroundUpdatingEnabled];
+                        cell.textLabel.text = NSLocalizedStringFromTable(@"background_updates", @"Paperboy", nil);
+                        [toggleSwitch addTarget:self action:@selector(toggleBackgroundUpdates:) forControlEvents:UIControlEventValueChanged];
+                        break;
+                    }
+                default:
+                    toggleSwitch.on = [SJOPaperboyViewController isLocationUpdatingEnabled];
+                    cell.textLabel.text = NSLocalizedStringFromTable(@"location_updates", @"Paperboy", nil);
+                    [toggleSwitch addTarget:self action:@selector(toggleLocationUpdates:) forControlEvents:UIControlEventValueChanged];
+            }
             break;
         }
         case 1:
         {
             
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
-            cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
             switch (indexPath.row) {
                 case 0:
                     if (self.isLocating) {
@@ -175,7 +193,7 @@
                     break;
             }
             
-            cell.userInteractionEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kBackgroundUpdates];
+            cell.userInteractionEnabled = [SJOPaperboyViewController isLocationUpdatingEnabled];
             cell.textLabel.textColor = [UIColor colorWithRed:0.19 green:0.30 blue:0.51 alpha:1.0];
             cell.imageView.image = nil;
             
@@ -189,7 +207,6 @@
             cell.accessoryView = nil;
             cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             cell.textLabel.textAlignment = NSTextAlignmentLeft;
-            cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
             cell.textLabel.textColor = [UIColor blackColor];
             //A navigation icon looks good here. Removed because I shouldn't redistibute Glyphish icons.
             //cell.imageView.image = [UIImage imageNamed:@"22-location-arrow"];
@@ -322,7 +339,7 @@
         [[SJOPaperboyLocationManager sharedLocationManager] stopMonitoringForRegion:[regionArray objectAtIndex:i]];
     }
     
-    if ([SJOPaperboyViewController isBackgroundUpdatingEnabled]) {
+    if ([SJOPaperboyViewController isLocationUpdatingEnabled]) {
         
         NSMutableArray *geofences = [NSMutableArray array];
         NSArray* locations = [SJOPaperboyViewController locationsForUpdate];
@@ -350,16 +367,17 @@
     IPInsetLabel* label = [[IPInsetLabel alloc] init];
     label.numberOfLines = 0;
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont systemFontOfSize:16];
+    label.font = self.labelFont;
     label.textColor = [UIColor colorWithRed:0.32 green:0.35 blue:0.44 alpha:1.0];
     label.textAlignment = NSTextAlignmentCenter;
     label.shadowColor = [UIColor whiteColor];
     label.shadowOffset = CGSizeMake(0, 1);
-    label.insets = UIEdgeInsetsMake(6,6,6,6);
+    label.insets = UIEdgeInsetsMake(18,6,18,6);
     label.text = text;
     label.clipsToBounds = YES;
     return label;
 }
+
 
 -(void) toggleBackgroundUpdates:(id)sender
 {
@@ -367,7 +385,15 @@
     BOOL backgroundUpdatesEnabled = ![userDefaults boolForKey:kBackgroundUpdates];
     [userDefaults setBool:backgroundUpdatesEnabled forKey:kBackgroundUpdates];
     [userDefaults synchronize];
-    
+}
+
+-(void) toggleLocationUpdates:(id)sender
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL backgroundUpdatesEnabled = ![userDefaults boolForKey:kLocationUpdates];
+    [userDefaults setBool:backgroundUpdatesEnabled forKey:kLocationUpdates];
+    [userDefaults synchronize];
+
     NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)];
     if (backgroundUpdatesEnabled) {
         self.numberOfSections = 3;
@@ -385,7 +411,39 @@
 + (BOOL) isBackgroundUpdatingEnabled
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    return [userDefaults boolForKey:kBackgroundUpdates];
+    return [userDefaults boolForKey:kBackgroundUpdates] && [SJOPaperboyViewController hasBackgroundModeEnabled];
+}
+
++ (BOOL) isLocationUpdatingEnabled
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    return [userDefaults boolForKey:kLocationUpdates];
+}
+
+
++ (void) setDefaultBackgroundValue:(BOOL) isBackgroundingEnabled
+{
+    [SJOPaperboyViewController setDefaultDefaultsValue:isBackgroundingEnabled forKey:kBackgroundUpdates];
+}
+
++ (void) setDefaultLocationUpdateValue:(BOOL) areLocationUpdatesEnabled
+{
+    [SJOPaperboyViewController setDefaultDefaultsValue:areLocationUpdatesEnabled forKey:kLocationUpdates];
+}
+
++ (void) setDefaultDefaultsValue:(BOOL) value forKey:(NSString*) key
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults synchronize];
+    
+    // check if value readable in userDefaults
+    id currentObject = [userDefaults objectForKey:key];
+    if (currentObject == nil)
+    {
+        // not readable: set value
+        [userDefaults setBool:value forKey:key];
+        [userDefaults synchronize];
+    }
 }
 
 + (NSArray*) locationsForUpdate
@@ -400,5 +458,32 @@
     }
     return [NSArray arrayWithArray:locations];
 }
+
+#pragma mark - New backgrounding detection
+
++ (BOOL) hasBackgroundModeEnabled
+{
+    static BOOL sharedInstance = NO;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        BOOL hasFetchCapability = [[UIApplication sharedApplication] respondsToSelector:@selector(setMinimumBackgroundFetchInterval:)];
+        if (!hasFetchCapability) {
+            sharedInstance = NO;
+            return;
+        }
+        
+        NSArray* backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
+        if (!backgroundModes) {
+            sharedInstance = NO;
+            return;
+        }
+        
+        NSSet* backgroundModesSet = [NSSet setWithArray:backgroundModes];
+        sharedInstance = [backgroundModesSet containsObject:@"fetch"];
+    });
+    return sharedInstance;
+}
+
+
 
 @end

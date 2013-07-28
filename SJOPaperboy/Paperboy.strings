@@ -7,14 +7,25 @@
 */
 
 "view_controller_title" = "Background Updates";
-"header_text" = "%@ can automatically deliver updates in the background when you enter or leave certain locations.";
+"header_text" = "%@ can automatically deliver updates in the background when you enter or leave certain locations, so your data is always up-to-date.";
 "footer_text" = "%@ respects your privacy. The locations you select are stored only on your %@.";
+
+"header_text_plus_fetch" = "%@ can automatically deliver updates in the background so your data is always up-to-date.";
+
+
 
 "region_monitoring_not_available_title" = "Background updates not supported";
 "region_monitoring_not_available_message" = "Due to hardware limitations, background updates are not supported on your device.";
 "region_monitoring_not_available_cancel" = "Okay";
 
-"background_updates" = "Background Updates";
+"region_monitoring_did_fail" = "Unable to get your location";
+"region_monitoring_did_fail_message" = "Unable to get your location at this time. Please try again later.";
+
+"background_updates" = "Background updates";
+
+"location_updates" = "Location updates";
+
+
 "getting_location" = "Getting Location...";
 "add_location" = "Add Current Location";
 "clear_locations" = "Clear Locations";

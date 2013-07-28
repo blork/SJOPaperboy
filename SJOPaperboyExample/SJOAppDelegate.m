@@ -17,6 +17,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
+    
+    [SJOPaperboyViewController setDefaultBackgroundValue:YES];
+    [SJOPaperboyViewController setDefaultLocationUpdateValue:YES];
     SJOPaperboyViewController* paperboyViewController = [[SJOPaperboyViewController alloc] init];
     
     UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:paperboyViewController];
@@ -24,6 +27,16 @@
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(setMinimumBackgroundFetchInterval:)]) {
+        NSInvocation* invoc = [NSInvocation invocationWithMethodSignature:
+                               [[UIApplication sharedApplication] methodSignatureForSelector:
+                                @selector(setMinimumBackgroundFetchInterval:)]];
+        [invoc setTarget:[UIApplication sharedApplication]];
+        [invoc setSelector:@selector(setMinimumBackgroundFetchInterval:)];
+        NSTimeInterval arg2 = 1800;
+        [invoc setArgument:&arg2 atIndex:2];
+        [invoc invoke];
+    }
     
     self.paperboyLocationManager = [SJOPaperboyLocationManager sharedLocationManager];
     [[SJOPaperboyLocationManager sharedInstance] setLocationChangedBlock:^{
@@ -35,5 +48,12 @@
     return YES;
 }
 
+
+#ifdef __IPHONE_7_0
+-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    
+}
+#endif
 
 @end
