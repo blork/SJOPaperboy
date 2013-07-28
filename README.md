@@ -3,15 +3,17 @@ SJOPaperboy
 An easy to use library that lets you implement background updates in your app that run 
 whenever the user enters or exits a specified location.
 
-![SJOPaperboyViewController](https://raw.github.com/blork/SJOPaperboy/master/screenshot.png)
+On iOS7 and above, an addition setting is displayed if you have the `UIBackgroundMode` `fetch` enabled in your `Info.plist`. This allows you to optionally run the new style background updates depending on the user's preference, as well as still having access to the old-style location based updates.
 
+![SJOPaperboyViewController](https://raw.github.com/blork/SJOPaperboy/master/screenshot.png)
+![SJOPaperboyViewController](https://raw.github.com/blork/SJOPaperboy/master/screenshot-ios7.png)
 
 Setup
 =====
 
 If you are using [CocoaPods](http://cocoapods.org), just add the following to your Podspec:
 ```
-pod 'SJOPaperboy', '~> 1.0.0'
+pod 'SJOPaperboy', '~> 2.0.0'
 ```
 
 Setup (without CocoaPods)
