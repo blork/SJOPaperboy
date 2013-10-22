@@ -82,20 +82,6 @@
     self.footerLabel.frame = CGRectMake(0, 0, self.view.bounds.size.width, 0);
     [self.footerLabel resizeHeightToFitText];
     self.tableView.tableFooterView = self.footerLabel;
-    
-    if (![CLLocationManager regionMonitoringAvailable]) {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"region_monitoring_not_available_title",
-                                                                       @"Paperboy",
-                                                                       nil)
-                                    message:NSLocalizedStringFromTable(@"region_monitoring_not_available_message",
-                                                                       @"Paperboy",
-                                                                       nil)
-                                   delegate:nil
-                          cancelButtonTitle:NSLocalizedStringFromTable(@"region_monitoring_not_available_cancel",
-                                                                       @"Paperboy",
-                                                                       nil)
-                          otherButtonTitles:nil] show];
-    }
 }
 
 
