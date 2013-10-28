@@ -132,9 +132,6 @@
         {
             UISwitch* toggleSwitch = [[UISwitch alloc] init];
             
-            cell.userInteractionEnabled = [CLLocationManager regionMonitoringAvailable];
-            toggleSwitch.userInteractionEnabled = [CLLocationManager regionMonitoringAvailable];
-            
             cell.accessoryView = toggleSwitch;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.imageView.image = nil;
@@ -151,6 +148,8 @@
                         break;
                     }
                 default:
+                    cell.userInteractionEnabled = [CLLocationManager regionMonitoringAvailable];
+                    toggleSwitch.userInteractionEnabled = [CLLocationManager regionMonitoringAvailable];
                     toggleSwitch.on = [SJOPaperboyViewController isLocationUpdatingEnabled];
                     cell.textLabel.text = NSLocalizedStringFromTable(@"location_updates", @"Paperboy", nil);
                     [toggleSwitch addTarget:self action:@selector(toggleLocationUpdates:) forControlEvents:UIControlEventValueChanged];
